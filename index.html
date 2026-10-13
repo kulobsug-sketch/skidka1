@@ -33,14 +33,14 @@
 
   <script>
     /* ===== ИН ҶО ССЫЛКАИ ВЕБ-ПРИЛОЖЕНИЯИ ХУДРО ГУЗОРЕД (.../exec) ===== */
-    var EXEC_URL = 'https://script.google.com/macros/s/AKfycbyvF419n7t2m7SQ5vlX3rrkpWywDVkc3mV9EVi5vi59IPE1a9UQTW38aTcVowD4USfJXw/exec';
+    var EXEC_URL = 'https://script.google.com/macros/s/ID-И_ШУМО/exec';
 
     var tab = new URLSearchParams(location.search).get('tab');
     var src = EXEC_URL + (tab ? '?tab=' + encodeURIComponent(tab) : '');
 
     var f = document.createElement('iframe');
     f.src = src;
-    f.allow = 'clipboard-write';
+    f.allow = 'camera; clipboard-write; clipboard-read';
     f.onload = function () { document.getElementById('load').classList.add('off'); };
     document.body.appendChild(f);
 
