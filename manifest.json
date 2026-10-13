@@ -1,0 +1,22 @@
+{
+  "name": "Скидка / Вазврат / Хароҷот",
+  "short_name": "Скидка",
+  "description": "Сабти скидкаҳо, вазвратҳо ва воридот/хароҷот",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f5f7fa",
+  "theme_color": "#00897b",
+  "lang": "tg",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Скидкаҳо", "url": "./index.html?tab=skidka", "icons": [{ "src": "icon-192.png", "sizes": "192x192" }] },
+    { "name": "Вазвратҳо", "url": "./index.html?tab=vozvrat", "icons": [{ "src": "icon-192.png", "sizes": "192x192" }] },
+    { "name": "Воридот / Хароҷот", "url": "./index.html?tab=harajot", "icons": [{ "src": "icon-192.png", "sizes": "192x192" }] }
+  ]
+}

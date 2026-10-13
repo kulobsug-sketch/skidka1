@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="tg">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Скидка / Вазврат / Хароҷот</title>
+  <meta name="theme-color" content="#00897b">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Скидка">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon-192.png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <style>
+    html, body { margin: 0; height: 100%; background: #f5f7fa; overflow: hidden; }
+    iframe { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; }
+    #load { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            font-family: 'Segoe UI', Tahoma, sans-serif; color: #555; gap: 14px; background: #f5f7fa; z-index: 2; }
+    #load img { width: 84px; height: 84px; border-radius: 20px; }
+    #load.off { display: none; }
+    #install { position: fixed; left: 12px; right: 12px; bottom: calc(14px + env(safe-area-inset-bottom)); z-index: 3;
+               display: none; padding: 13px; border: none; border-radius: 10px; background: #00897b; color: #fff;
+               font-size: 15px; font-weight: 600; box-shadow: 0 4px 14px rgba(0,0,0,.25); }
+    #offline { display: none; }
+    #offline.on { display: flex; position: fixed; inset: 0; z-index: 4; background: #f5f7fa; align-items: center; justify-content: center;
+                  font-family: 'Segoe UI', Tahoma, sans-serif; color: #c5221f; text-align: center; padding: 20px; }
+  </style>
+</head>
+<body>
+  <div id="load"><img src="icon-192.png" alt=""><div>Боркунӣ...</div></div>
+  <div id="offline">📵 Интернет нест.<br>Пас аз пайваст шудан саҳифаро нав кунед.</div>
+  <button id="install" type="button">📲 Установить приложение</button>
+
+  <script>
+    /* ===== ИН ҶО ССЫЛКАИ ВЕБ-ПРИЛОЖЕНИЯИ ХУДРО ГУЗОРЕД (.../exec) ===== */
+    var EXEC_URL = 'https://script.google.com/macros/s/AKfycbyvF419n7t2m7SQ5vlX3rrkpWywDVkc3mV9EVi5vi59IPE1a9UQTW38aTcVowD4USfJXw/exec';
+
+    var tab = new URLSearchParams(location.search).get('tab');
+    var src = EXEC_URL + (tab ? '?tab=' + encodeURIComponent(tab) : '');
+
+    var f = document.createElement('iframe');
+    f.src = src;
+    f.allow = 'clipboard-write';
+    f.onload = function () { document.getElementById('load').classList.add('off'); };
+    document.body.appendChild(f);
+
+    function net() { document.getElementById('offline').classList.toggle('on', !navigator.onLine); }
+    addEventListener('online', function () { net(); f.src = src; });
+    addEventListener('offline', net); net();
+
+    /* ----- тугмаи насб ----- */
+    var deferred = null, btn = document.getElementById('install');
+    addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); deferred = e; btn.style.display = 'block'; });
+    btn.onclick = function () {
+      if (!deferred) return;
+      deferred.prompt();
+      deferred.userChoice.finally(function () { deferred = null; btn.style.display = 'none'; });
+    };
+    addEventListener('appinstalled', function () { btn.style.display = 'none'; });
+
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(function () {});
+  </script>
+</body>
+</html>
